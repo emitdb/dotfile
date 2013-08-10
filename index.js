@@ -12,7 +12,8 @@ var fs = require('fs'),
 function Dotfile(basename, options) {
   this.basename = basename;
   this.extname = '.json';
-  this.filepath = path.join(Dotfile._tilde, '.' + this.basename + this.extname);
+  this.dirname = typeof options.dirname === 'string' ? opts.dirname : Dotfile._tilde;
+  this.filepath = path.join(this.dirname, '.' + this.basename + this.extname);
 }
 
 /**
