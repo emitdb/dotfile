@@ -1,0 +1,26 @@
+{
+  "name": "dotfile",
+  "version": "0.0.0",
+  "description": "easy way to read and write json dotfiles agnostic of the os",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:dscape/dotfile"
+  },
+  "keywords": [
+    "dotfile",
+    "file",
+    "configuration",
+    "windows",
+    "linux",
+    "solaris"
+  ],
+  "author": "nuno job (@dscape, nunojobpinto@gmail.com)",
+  "license": "apache2",
+  "bugs": {
+    "url": "https://github.com/dscape/dotfile/issues"
+  }
+}
