@@ -1,6 +1,6 @@
 {
   "name": "dotfile",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "easy way to read and write json dotfiles agnostic of the os",
   "main": "index.js",
   "scripts": {

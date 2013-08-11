@@ -12,7 +12,7 @@ var fs = require('fs'),
 function Dotfile(basename, options) {
   this.basename = basename;
   this.extname = '.json';
-  this.dirname = typeof options.dirname === 'string' ? opts.dirname : Dotfile._tilde;
+  this.dirname = (options && typeof options.dirname === 'string') ? options.dirname : Dotfile._tilde;
   this.filepath = path.join(this.dirname, '.' + this.basename + this.extname);
 }
 
@@ -65,7 +65,6 @@ Dotfile.prototype.exists = function (cb) {
   return fs.exists(this.filepath, cb);
 };
 
-Dotfile._version = require('./package').version;
 Dotfile._tilde = process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'];
 Dotfile._id = function id(val) {
   return val;
@@ -74,3 +73,5 @@ Dotfile._id = function id(val) {
 module.exports = function (filename, options) {
   return new Dotfile(filename, options);
 };
+module.exports._version = require('./package').version;
+module.exports._tilde = Dotfile._tilde;
