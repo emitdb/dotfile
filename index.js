@@ -1,6 +1,7 @@
 var fs = require('fs'),
   path = require('path');
 
+yaml = require("js-yaml");
 /**
  * Class to easily manage dot files
  *
@@ -11,7 +12,16 @@ var fs = require('fs'),
 
 function Dotfile(basename, options) {
   this.basename = basename;
-  this.extname = (options && typeof options.extname === 'string') ? options.extname : '.json';
+
+  //supported formats: yaml, json
+  this.format = (options && typeof options.format === 'string') ? options.format : 'json';
+  switch (this.format) {
+    case "yaml":
+      this.extname = (options && typeof options.extname === 'string') ? options.extname : '.yml';
+      break;
+    default:
+      this.extname = (options && typeof options.extname === 'string') ? options.extname : '.json';
+  }
   this.dirname = (options && typeof options.dirname === 'string') ? options.dirname : Dotfile._tilde;
   this.filepath = path.join(this.dirname, '.' + this.basename + this.extname);
 }
@@ -23,7 +33,17 @@ function Dotfile(basename, options) {
  */
 
 Dotfile.prototype.write = function (data, cb) {
-  return fs.writeFile(this.filepath, JSON.stringify(data), {
+  switch (this.format) {
+    case "yaml":
+      data = yaml.safeDump(data)
+      break;
+    case "json":
+      data = JSON.stringify(data);
+      break;
+    default:
+      data = JSON.stringify(data);
+  }
+  return fs.writeFile(this.filepath, data, {
     encoding: 'utf-8'
   }, cb);
 };
@@ -41,10 +61,16 @@ Dotfile.prototype.read = function (cb) {
     if (err) {
       return cb(err);
     }
-    try {
-      data = JSON.parse(data);
-    } catch (exc) {
-      return cb(exc);
+
+    switch (this.format) {
+      case "yaml":
+        data = yaml.safeLoad(data)
+        break;
+      case "json":
+        data = JSON.parse(data);
+        break;
+      default:
+        data = JSON.parse(data);
     }
     return cb(null, data);
   });
