@@ -22,5 +22,8 @@
   "license": "apache2",
   "bugs": {
     "url": "https://github.com/emitdb/dotfile/issues"
+  },
+  "dependencies": {
+    "js-yaml": "~2.1.0"
   }
 }
