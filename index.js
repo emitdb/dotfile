@@ -69,8 +69,6 @@ Dotfile.prototype.read = function (cb) {
       case "json":
         data = JSON.parse(data);
         break;
-      default:
-        data = JSON.parse(data);
     }
     return cb(null, data);
   });
